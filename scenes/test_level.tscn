@@ -1,0 +1,48 @@
+[gd_scene load_steps=9 format=3 uid="uid://bx8rmomjig47y"]
+
+[ext_resource type="Script" path="res://scenes/RedPanda.gd" id="2_6ussn"]
+[ext_resource type="ArrayMesh" uid="uid://dhyvwjd3nvaiy" path="res://models/Red_panda.vox" id="2_hl586"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_w1tb5"]
+size = Vector3(100, 0.5, 100)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6irku"]
+albedo_color = Color(0.454902, 0.847059, 0.427451, 1)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_avw0p"]
+sky_top_color = Color(0.443137, 0.247059, 1, 1)
+sky_horizon_color = Color(0.698039, 0.560784, 1, 1)
+sky_curve = 0.135188
+
+[sub_resource type="Sky" id="Sky_hrskk"]
+sky_material = SubResource("ProceduralSkyMaterial_avw0p")
+
+[sub_resource type="Environment" id="Environment_bg4hp"]
+background_mode = 2
+sky = SubResource("Sky_hrskk")
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_2i0js"]
+
+[node name="test-level" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.48897, 0, 1.21351)
+
+[node name="Floor" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0148582, 0.0364971, 0.00914383)
+mesh = SubResource("BoxMesh_w1tb5")
+surface_material_override/0 = SubResource("StandardMaterial3D_6irku")
+
+[node name="RedPanda" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.1439, 3.00306, 24.8793)
+mesh = ExtResource("2_hl586")
+script = ExtResource("2_6ussn")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.737277, 0.197523, -0.64607, 0, 0.956305, 0.292372, 0.67559, -0.215559, 0.705062, 3, 7, 30)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.669131, 0.539058, -0.511547, 0, 0.688355, 0.725374, 0.743145, 0.48537, -0.460599, 0, 0, 0)
+light_energy = 1.971
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_bg4hp")
+camera_attributes = SubResource("CameraAttributesPractical_2i0js")
