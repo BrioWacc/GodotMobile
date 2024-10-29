@@ -16,9 +16,17 @@ config/features=PackedStringArray("4.2", "Mobile")
 run/max_fps=30
 config/icon="res://icons/compare.png"
 
+[autoload]
+
+Manager="*res://scripts/Manager.gd"
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/MagicaVoxel_Importer_with_Extensions/plugin.cfg")
+
+[gui]
+
+theme/custom_font="res://resources/font/MinimalPixelFont.ttf"
 
 [rendering]
 

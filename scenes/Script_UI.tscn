@@ -1,0 +1,167 @@
+[gd_scene load_steps=11 format=3 uid="uid://bo48hy4ieupoc"]
+
+[ext_resource type="Texture2D" uid="uid://caiiqf8rthriu" path="res://resources/UI/Script_UI.png" id="1_lwp4x"]
+[ext_resource type="StyleBox" uid="uid://0e1spieoun80" path="res://resources/stylebox/hover_style_box_flat.tres" id="1_v2ieu"]
+[ext_resource type="Texture2D" uid="uid://bw6kdrcvxk7ey" path="res://resources/UI/Script_UI-inner.png" id="2_e7ww2"]
+[ext_resource type="StyleBox" uid="uid://c5652wjqpeleh" path="res://resources/stylebox/normal_style_box_flat.tres" id="2_v1xsc"]
+[ext_resource type="Script" path="res://scripts/Exit.gd" id="3_6hblc"]
+[ext_resource type="Script" path="res://scripts/Script_UI.gd" id="3_o57d6"]
+[ext_resource type="Script" path="res://scripts/PandaHBox.gd" id="7_1303r"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mj7vc"]
+
+[sub_resource type="Theme" id="Theme_y5a28"]
+Button/font_sizes/font_size = 32
+Button/styles/focus = SubResource("StyleBoxEmpty_mj7vc")
+Button/styles/hover = ExtResource("1_v2ieu")
+Button/styles/normal = ExtResource("2_v1xsc")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_2nsar"]
+
+[node name="Ui" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2.10562, 2.03246)
+theme = SubResource("Theme_y5a28")
+script = ExtResource("3_o57d6")
+
+[node name="ScriptBG" type="NinePatchRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -424.0
+offset_top = -260.5
+offset_right = 424.0
+offset_bottom = 260.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_lwp4x")
+patch_margin_left = 9
+patch_margin_top = 9
+patch_margin_right = 9
+patch_margin_bottom = 9
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="CodingArea" type="NinePatchRect" parent="ScriptBG"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -411.0
+offset_top = -246.0
+offset_right = 354.0
+offset_bottom = 173.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_e7ww2")
+patch_margin_left = 9
+patch_margin_top = 9
+patch_margin_right = 9
+patch_margin_bottom = 9
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="BlockArea" type="NinePatchRect" parent="ScriptBG"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -411.0
+offset_top = 180.0
+offset_right = 355.0
+offset_bottom = 242.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_e7ww2")
+patch_margin_left = 9
+patch_margin_top = 9
+patch_margin_right = 9
+patch_margin_bottom = 9
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="ElementArea" type="NinePatchRect" parent="ScriptBG"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 361.0
+offset_top = -245.5
+offset_right = 414.0
+offset_bottom = 244.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_e7ww2")
+patch_margin_left = 9
+patch_margin_top = 9
+patch_margin_right = 9
+patch_margin_bottom = 9
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Exit" type="Button" parent="ScriptBG/ElementArea"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 43.0
+offset_bottom = 42.0
+text = "X"
+script = ExtResource("3_6hblc")
+
+[node name="Clear" type="Button" parent="ScriptBG/ElementArea"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 411.5
+offset_right = 43.0
+offset_bottom = 443.5
+text = "CL"
+
+[node name="Save" type="Button" parent="ScriptBG/ElementArea"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 448.5
+offset_right = 43.0
+offset_bottom = 480.5
+text = "S"
+
+[node name="PandaHBox" type="HBoxContainer" parent="ScriptBG"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 447.0
+offset_right = 772.0
+offset_bottom = 496.0
+script = ExtResource("7_1303r")
+
+[node name="step" type="Button" parent="ScriptBG/PandaHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "STEP"
+icon = SubResource("ViewportTexture_2nsar")
+
+[node name="turn" type="Button" parent="ScriptBG/PandaHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "TURN"
+
+[node name="FrogHBBox" type="HBoxContainer" parent="ScriptBG"]
+layout_mode = 2
+offset_bottom = 40.0
+
+[connection signal="button_up" from="ScriptBG/ElementArea/Exit" to="ScriptBG/ElementArea/Exit" method="_on_button_up"]
+[connection signal="pressed" from="ScriptBG/ElementArea/Exit" to="ScriptBG/ElementArea/Exit" method="_on_pressed"]

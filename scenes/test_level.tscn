@@ -1,13 +1,21 @@
-[gd_scene load_steps=9 format=3 uid="uid://bx8rmomjig47y"]
+[gd_scene load_steps=13 format=3 uid="uid://bx8rmomjig47y"]
 
-[ext_resource type="Script" path="res://scenes/RedPanda.gd" id="2_6ussn"]
-[ext_resource type="ArrayMesh" uid="uid://dhyvwjd3nvaiy" path="res://models/Red_panda.vox" id="2_hl586"]
+[ext_resource type="ArrayMesh" uid="uid://udj7ersreuwn" path="res://models/Red_panda.vox" id="1_n2el6"]
+[ext_resource type="Script" path="res://scripts/RedPanda.gd" id="2_6ussn"]
+[ext_resource type="ArrayMesh" uid="uid://dkiobwmtmyeee" path="res://models/frog.vox" id="3_pxbcd"]
+[ext_resource type="Script" path="res://scripts/Frog.gd" id="4_u5vam"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_w1tb5"]
 size = Vector3(100, 0.5, 100)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6irku"]
 albedo_color = Color(0.454902, 0.847059, 0.427451, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_be8p1"]
+size = Vector3(2.2, 1.4, 1.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fg45f"]
+size = Vector3(1, 0.995483, 1)
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_avw0p"]
 sky_top_color = Color(0.443137, 0.247059, 1, 1)
@@ -32,12 +40,29 @@ mesh = SubResource("BoxMesh_w1tb5")
 surface_material_override/0 = SubResource("StandardMaterial3D_6irku")
 
 [node name="RedPanda" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.1439, 3.00306, 24.8793)
-mesh = ExtResource("2_hl586")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.1439, 0.582924, 24.8793)
+mesh = ExtResource("1_n2el6")
 script = ExtResource("2_6ussn")
 
+[node name="Area3D" type="Area3D" parent="RedPanda"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RedPanda/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+shape = SubResource("BoxShape3D_be8p1")
+
+[node name="Frog" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.986421, 0, 0.164239, 0, 1, 0, -0.164239, 0, -0.986421, 6.35922, 0.276742, 23.4956)
+mesh = ExtResource("3_pxbcd")
+script = ExtResource("4_u5vam")
+
+[node name="Area3D" type="Area3D" parent="Frog"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Frog/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 0.8, 0, 0, 0, 1.1, 0, 0.4, -0.05)
+shape = SubResource("BoxShape3D_fg45f")
+
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.737277, 0.197523, -0.64607, 0, 0.956305, 0.292372, 0.67559, -0.215559, 0.705062, 3, 7, 30)
+transform = Transform3D(0.999657, 0.0237244, -0.0110629, 0, 0.422618, 0.906308, 0.0261769, -0.905997, 0.422473, 10, 5, 27)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.669131, 0.539058, -0.511547, 0, 0.688355, 0.725374, 0.743145, 0.48537, -0.460599, 0, 0, 0)
@@ -46,3 +71,6 @@ light_energy = 1.971
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_bg4hp")
 camera_attributes = SubResource("CameraAttributesPractical_2i0js")
+
+[connection signal="input_event" from="RedPanda/Area3D" to="RedPanda" method="_on_area_3d_input_event"]
+[connection signal="input_event" from="Frog/Area3D" to="Frog" method="_on_area_3d_input_event"]
