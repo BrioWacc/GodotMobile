@@ -4,9 +4,8 @@
 [ext_resource type="StyleBox" uid="uid://0e1spieoun80" path="res://resources/stylebox/hover_style_box_flat.tres" id="1_v2ieu"]
 [ext_resource type="Texture2D" uid="uid://bw6kdrcvxk7ey" path="res://resources/UI/Script_UI-inner.png" id="2_e7ww2"]
 [ext_resource type="StyleBox" uid="uid://c5652wjqpeleh" path="res://resources/stylebox/normal_style_box_flat.tres" id="2_v1xsc"]
-[ext_resource type="Script" path="res://scripts/Exit.gd" id="3_6hblc"]
 [ext_resource type="Script" path="res://scripts/Script_UI.gd" id="3_o57d6"]
-[ext_resource type="Script" path="res://scripts/PandaHBox.gd" id="7_1303r"]
+[ext_resource type="Script" path="res://scripts/ObjHBox.gd" id="6_i5glp"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mj7vc"]
 
@@ -15,6 +14,12 @@ Button/font_sizes/font_size = 32
 Button/styles/focus = SubResource("StyleBoxEmpty_mj7vc")
 Button/styles/hover = ExtResource("1_v2ieu")
 Button/styles/normal = ExtResource("2_v1xsc")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_not0m"]
+content_margin_left = 4.0
+content_margin_top = 0.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_2nsar"]
 
@@ -73,6 +78,27 @@ patch_margin_bottom = 9
 axis_stretch_horizontal = 2
 axis_stretch_vertical = 2
 
+[node name="PanelContainer" type="PanelContainer" parent="ScriptBG/CodingArea"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -376.5
+offset_top = -203.5
+offset_right = 376.5
+offset_bottom = 203.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_not0m")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="ScriptBG/CodingArea/PanelContainer"]
+layout_mode = 2
+
+[node name="code_cols" type="VBoxContainer" parent="ScriptBG/CodingArea/PanelContainer/ScrollContainer"]
+layout_mode = 2
+
 [node name="BlockArea" type="NinePatchRect" parent="ScriptBG"]
 layout_mode = 1
 anchors_preset = 8
@@ -122,7 +148,6 @@ offset_top = 10.0
 offset_right = 43.0
 offset_bottom = 42.0
 text = "X"
-script = ExtResource("3_6hblc")
 
 [node name="Clear" type="Button" parent="ScriptBG/ElementArea"]
 layout_mode = 0
@@ -141,12 +166,13 @@ offset_bottom = 480.5
 text = "S"
 
 [node name="PandaHBox" type="HBoxContainer" parent="ScriptBG"]
+visible = false
 layout_mode = 0
 offset_left = 20.0
 offset_top = 447.0
 offset_right = 772.0
 offset_bottom = 496.0
-script = ExtResource("7_1303r")
+script = ExtResource("6_i5glp")
 
 [node name="step" type="Button" parent="ScriptBG/PandaHBox"]
 layout_mode = 2
@@ -159,9 +185,29 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "TURN"
 
-[node name="FrogHBBox" type="HBoxContainer" parent="ScriptBG"]
+[node name="FrogHBox" type="HBoxContainer" parent="ScriptBG"]
+visible = false
 layout_mode = 2
-offset_bottom = 40.0
+offset_left = 20.0
+offset_top = 447.0
+offset_right = 772.0
+offset_bottom = 496.0
+script = ExtResource("6_i5glp")
 
-[connection signal="button_up" from="ScriptBG/ElementArea/Exit" to="ScriptBG/ElementArea/Exit" method="_on_button_up"]
-[connection signal="pressed" from="ScriptBG/ElementArea/Exit" to="ScriptBG/ElementArea/Exit" method="_on_pressed"]
+[node name="tongue" type="Button" parent="ScriptBG/FrogHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "TONGUE"
+icon = SubResource("ViewportTexture_2nsar")
+
+[node name="turn" type="Button" parent="ScriptBG/FrogHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "TURN"
+
+[connection signal="pressed" from="ScriptBG/ElementArea/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="ScriptBG/ElementArea/Clear" to="." method="_on_clear_pressed"]
+[connection signal="pressed" from="ScriptBG/PandaHBox/step" to="." method="_on_step_pressed"]
+[connection signal="pressed" from="ScriptBG/PandaHBox/turn" to="." method="_on_turn_pressed"]
+[connection signal="pressed" from="ScriptBG/FrogHBox/tongue" to="." method="_on_tongue_pressed"]
+[connection signal="pressed" from="ScriptBG/FrogHBox/turn" to="." method="_on_turn_pressed"]
