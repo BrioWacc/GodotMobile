@@ -1,0 +1,67 @@
+[gd_scene load_steps=12 format=3 uid="uid://pbotcotfb6ar"]
+
+[ext_resource type="Script" path="res://scripts/level2.gd" id="1_rx3o4"]
+[ext_resource type="Shader" path="res://shaders/simple.gdshader" id="2_fuuc0"]
+[ext_resource type="MeshLibrary" uid="uid://cs3kxaes6yd0g" path="res://map_assets/tiles.tres" id="3_xdkv6"]
+[ext_resource type="PackedScene" uid="uid://xk66pgmq2woi" path="res://scenes/red_panda.tscn" id="4_vr0tt"]
+[ext_resource type="PackedScene" uid="uid://gd4wxcjeteaq" path="res://scenes/frog.tscn" id="5_oidyc"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_avw0p"]
+sky_top_color = Color(0.443137, 0.247059, 1, 1)
+sky_horizon_color = Color(0.698039, 0.560784, 1, 1)
+sky_curve = 0.135188
+
+[sub_resource type="Sky" id="Sky_hrskk"]
+sky_material = SubResource("ProceduralSkyMaterial_avw0p")
+
+[sub_resource type="Environment" id="Environment_bg4hp"]
+background_mode = 2
+sky = SubResource("Sky_hrskk")
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_2i0js"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3l7n5"]
+render_priority = 0
+shader = ExtResource("2_fuuc0")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_lmsvu"]
+lightmap_size_hint = Vector2i(12, 12)
+size = Vector2(50, 50)
+
+[node name="test-level" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.48897, 0, 1.21351)
+script = ExtResource("1_rx3o4")
+
+[node name="Environment" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 7, 15, 5)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment"]
+transform = Transform3D(0.469472, -0.869534, -0.153322, 0, -0.173648, 0.984807, -0.882947, -0.462339, -0.0815229, 0, 0, 0)
+light_color = Color(1, 1, 0.870588, 1)
+light_energy = 1.64
+sky_mode = 1
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
+environment = SubResource("Environment_bg4hp")
+camera_attributes = SubResource("CameraAttributesPractical_2i0js")
+
+[node name="Water" type="MeshInstance3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, -0.5, 5)
+material_override = SubResource("ShaderMaterial_3l7n5")
+mesh = SubResource("PlaneMesh_lmsvu")
+
+[node name="GridMap" type="GridMap" parent="."]
+mesh_library = ExtResource("3_xdkv6")
+cell_size = Vector3(0.5, 0.25, 0.5)
+data = {
+"cells": PackedInt32Array(2, 2, 36, 6, 2, 36, 6, 65534, 36, 10, 65534, 36, 10, 2, 36, 14, 65534, 36, 14, 2, 36, 14, 6, 36, 12, 0, 36, 8, 1, 36, 14, 10, 36, 18, 10, 36, 22, 10, 36, 26, 10, 36, 25, 13, 110, 26, 13, 110, 27, 13, 110, 26, 14, 110, 25, 14, 110, 27, 14, 110, 27, 15, 110, 26, 15, 110, 25, 15, 110, 24, 13, 1048686, 24, 14, 1048686, 24, 15, 1048686, 23, 15, 1048686, 23, 14, 1048686, 23, 13, 1048686, 22, 13, 1048686, 22, 14, 1048686, 22, 15, 1048686, 21, 15, 1048686, 21, 14, 1048686, 21, 13, 1048686, 20, 13, 1048686, 20, 14, 1048686, 20, 15, 1048686, 19, 15, 1048686, 19, 14, 1048686, 19, 13, 1048686, 18, 13, 1048686, 18, 14, 1048686, 18, 15, 1048686, 17, 13, 1048686, 17, 14, 1048686, 17, 15, 1048686, 27, 16, 1048686, 27, 17, 1048686, 27, 18, 1048686, 26, 18, 1048686, 26, 17, 1048686, 26, 16, 1048686, 25, 16, 1048686, 25, 17, 1048686, 25, 18, 1048686, 24, 16, 1048686, 24, 17, 1048686, 24, 18, 1048686, 23, 18, 1048686, 22, 18, 1048686, 22, 17, 1048686, 22, 16, 1048686, 23, 16, 1048686, 23, 17, 1048686, 22, 19, 1048686, 23, 19, 1048686, 24, 19, 1048686, 25, 19, 1048686, 26, 19, 1048686, 14, 65530, 1048612, 8, 65534, 1048612, 8, 2, 1048612, 12, 2, 1048612, 14, 1, 1048612, 13, 65534, 1048612, 14, 65533, 1048612, 14, 4, 1048612, 14, 7, 1048612, 16, 10, 1048612, 20, 10, 1048612, 23, 10, 1048612, 5, 2, 1048612, 6, 1, 1048612, 65541, 65533, 4, 65548, 4, 1441796, 65552, 7, 1441829, 131085, 65529, 1441901, 131087, 65531, 1441901, 131085, 65530, 1441901, 21, 16, 1441902, 21, 17, 1441902, 21, 18, 1441902, 21, 19, 1441902, 131098, 9, 1441914, 131095, 10, 1441914, 131089, 11, 1441914, 131086, 10, 1441914, 131087, 2, 1441914, 131082, 0, 1441914, 131079, 65533, 1441914, 131085, 65534, 1441914, 131078, 1, 1441914, 131081, 3, 1441914, 131074, 3, 1441914, 131099, 11, 1441920, 131087, 65529, 107, 22, 26, 36, 131094, 26, 121, 27, 19, 110, 20, 16, 110, 20, 17, 110, 20, 18, 110, 20, 19, 110, 20, 20, 110, 21, 20, 110, 22, 20, 110, 23, 20, 110, 24, 20, 110, 25, 20, 110, 26, 20, 110, 27, 20, 110, 19, 16, 110, 18, 16, 110, 17, 16, 110, 16, 16, 110, 16, 15, 110, 16, 14, 110, 16, 13, 110)
+}
+metadata/_editor_floor_ = Vector3(0, 0, 0)
+
+[node name="RedPanda" parent="." instance=ExtResource("4_vr0tt")]
+transform = Transform3D(-0.8, 0, -6.99382e-08, 0, 0.8, 0, 6.99382e-08, 0, -0.8, 1.2, 0.6, 1.25)
+
+[node name="Frog" parent="." instance=ExtResource("5_oidyc")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 13.2, 0.6, 7.25)

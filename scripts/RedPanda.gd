@@ -2,7 +2,8 @@ extends MeshInstance3D
 
 const ui_scene: PackedScene = preload("res://scenes/Script_UI.tscn")
 var ui_instance: Control
-	
+var obj_name = "Panda"
+
 func _on_area_3d_input_event(_camera, event, _position, _normal, _shape_idx):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		openGUi()
@@ -19,4 +20,5 @@ func openGUi():
 		get_tree().current_scene.add_child(ui_instance) 
 		ui_instance.set_type("panda")
 	ui_instance.show()
+	
 	pass

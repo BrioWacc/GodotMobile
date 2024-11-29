@@ -1,0 +1,57 @@
+[gd_scene load_steps=7 format=3 uid="uid://b0i1mhqxro53p"]
+
+[ext_resource type="StyleBox" uid="uid://c5652wjqpeleh" path="res://resources/stylebox/normal_style_box_flat.tres" id="1_olc7d"]
+[ext_resource type="StyleBox" uid="uid://0e1spieoun80" path="res://resources/stylebox/hover_style_box_flat.tres" id="2_lxgli"]
+[ext_resource type="Script" path="res://scripts/player_ui.gd" id="3_w8h4n"]
+
+[sub_resource type="Theme" id="Theme_iafc4"]
+Button/styles/focus = ExtResource("1_olc7d")
+Button/styles/hover = ExtResource("2_lxgli")
+Button/styles/normal = ExtResource("1_olc7d")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ko3pw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wb8in"]
+
+[node name="Player UI" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+scale = Vector2(0.7, 0.7)
+theme = SubResource("Theme_iafc4")
+script = ExtResource("3_w8h4n")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 350.0
+offset_bottom = 170.0
+theme_override_constants/separation = 20
+
+[node name="Exit" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 80
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ko3pw")
+text = "Exit"
+
+[node name="Play" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 80
+theme_override_styles/focus = SubResource("StyleBoxEmpty_wb8in")
+text = "Play"
+
+[node name="Reset" type="Button" parent="."]
+layout_mode = 2
+offset_left = 10.0
+offset_top = 180.0
+offset_right = 170.0
+offset_bottom = 340.0
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 80
+text = "Reset"
+
+[connection signal="pressed" from="HBoxContainer/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="HBoxContainer/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="Reset" to="." method="_on_reset_pressed"]

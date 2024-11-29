@@ -11,6 +11,8 @@ func set_type(t: String, q: int = 1):
 	
 	if q == 1:
 		$Label.text = t
+		quantity = 1
 	else:
 		$Label.text = t + " " + str(q)
+		quantity = q
 
