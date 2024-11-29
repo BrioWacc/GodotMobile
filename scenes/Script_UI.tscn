@@ -185,7 +185,14 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "TURN"
 
+[node name="While" type="Button" parent="ScriptBG/PandaHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "WHILE"
+icon = SubResource("ViewportTexture_2nsar")
+
 [node name="FrogHBox" type="HBoxContainer" parent="ScriptBG"]
+visible = false
 layout_mode = 2
 offset_left = 20.0
 offset_top = 447.0
@@ -215,6 +222,7 @@ icon = SubResource("ViewportTexture_2nsar")
 [connection signal="pressed" from="ScriptBG/ElementArea/Delete" to="." method="_on_delete_pressed"]
 [connection signal="pressed" from="ScriptBG/PandaHBox/step" to="." method="_on_step_pressed"]
 [connection signal="pressed" from="ScriptBG/PandaHBox/turn" to="." method="_on_turn_pressed"]
+[connection signal="pressed" from="ScriptBG/PandaHBox/While" to="." method="_on_while_pressed"]
 [connection signal="pressed" from="ScriptBG/FrogHBox/tongue" to="." method="_on_tongue_pressed"]
 [connection signal="pressed" from="ScriptBG/FrogHBox/turn" to="." method="_on_turn_pressed"]
 [connection signal="pressed" from="ScriptBG/FrogHBox/step" to="." method="_on_step_pressed"]

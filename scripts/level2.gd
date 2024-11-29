@@ -5,7 +5,7 @@ extends Node3D
 @onready var hint_ui : PackedScene = preload("res://scenes/hint.tscn")
 @onready var redpanda = $RedPanda
 @onready var frog = $Frog
-
+@onready var skip : bool = false;
 var player_ui_instance
 enum {NORTH, EAST, SOUTH, WEST}
 var Actions : int = 0
@@ -18,7 +18,7 @@ var frog_initial_z
 
 var map = [
 	[0, 0, 0, 0, 0, 0, 0, 0, 0],
-	[0, 0, 0, 0, 1,  0, 0, 0, 0],
+	[0, 0, 0, 0, 1, 0, 0, 0, 0],
 	[0, 0, 1, 1, 1, 0, 0, 0, 0],
 	[0, 1, 1, 1, 1, 0, 0, 0, 0],
 	[0, 0, 0, 0, 1, 0, 0, 0, 0],
@@ -50,8 +50,6 @@ func _ready():
 	
 	frog_initial_x = frog.position.x
 	frog_initial_z = frog.position.z
-	
-	pass
 
 func wait(seconds: float) -> void:
 	await get_tree().create_timer(seconds).timeout
@@ -67,7 +65,14 @@ func play_level():
 	
 	for step in range(max_steps):
 		if step < redpanda_instructions.size():
-			await execute_step(redpanda, redpanda_instructions[step], panda_pos, panda_current_direction_index)
+			if skip:
+				skip = false
+				continue
+				
+			if(step+1 < redpanda_instructions.size()):
+				await execute_step(redpanda, redpanda_instructions[step], panda_pos, panda_current_direction_index, redpanda_instructions[step+1])
+
+			else: await execute_step(redpanda, redpanda_instructions[step], panda_pos, panda_current_direction_index)
 		
 		if step < frog_instructions.size():
 			await execute_step(frog, frog_instructions[step], frog_pos, frog_current_direction_index)
@@ -77,7 +82,7 @@ func play_level():
 	
 	player_ui_instance.unlock_reset()
 		
-func execute_step(character, instruction, position, direction_index):
+func execute_step(character, instruction, position, direction_index, job=null):
 	Actions += 1;
 	if instruction.type == "STEP":
 		for i in range(instruction.quantity):
@@ -116,6 +121,120 @@ func execute_step(character, instruction, position, direction_index):
 		if(position == spot):
 			map[goal[0]][goal[1]] = 2
 		await wait(0.3)
+		
+	else:
+		skip = true
+		if instruction.type == "WHILE LAND INFRONT":
+			if direction_index[0] == NORTH:
+				while(map[position[0]][position[1] + 1] == 1):
+					await execute_step(character, job, position, direction_index)
+			elif direction_index[0] == SOUTH:
+				while(map[position[0]][position[1] - 1] == 1):
+					await execute_step(character, job, position, direction_index)
+			elif direction_index[0] == EAST:
+				while(map[position[0]][position[0] + 1] == 1):
+					await execute_step(character, job, position, direction_index)
+			elif direction_index[0] == WEST:				
+				while(map[position[0]][position[0] - 1] == 1):
+					await execute_step(character, job, position, direction_index)
+				
+		elif instruction.type == "WHILE LAND BEHIND":
+			if direction_index[0] == NORTH:
+				while(map[position[0]][position[1] - 1] == 1):
+					await execute_step(character, job, position, direction_index)
+			elif direction_index[0] == SOUTH:
+				while(map[position[0]][position[1] + 1] == 1):
+					await execute_step(character, job, position, direction_index)
+			elif direction_index[0] == EAST:
+				while(map[position[0]][position[0] - 1] == 1):
+					await execute_step(character, job, position, direction_index)
+			elif direction_index[0] == WEST:				
+				while(map[position[0]][position[0] + 1] == 1):
+					await execute_step(character, job, position, direction_index)
+					
+		elif instruction.type == "WHILE WATER INFRONT":
+			if direction_index[0] == NORTH:
+				while(map[position[0]][position[1] + 1] == 0):
+					await execute_step(character, job, position, direction_index)
+			elif direction_index[0] == SOUTH:
+				while(map[position[0]][position[1] - 1] == 0):
+					await execute_step(character, job, position, direction_index)
+			elif direction_index[0] == EAST:
+				while(map[position[0]][position[0] + 1] == 0):
+					await execute_step(character, job, position, direction_index)
+			elif direction_index[0] == WEST:				
+				while(map[position[0]][position[0] - 1] == 0):
+					await execute_step(character, job, position, direction_index)
+
+		elif instruction.type == "WHILE WATER BEHIND":
+			if direction_index[0] == NORTH:
+				while(map[position[0]][position[1] - 1] == 0):
+					await execute_step(character, job, position, direction_index)
+			elif direction_index[0] == SOUTH:
+				while(map[position[0]][position[1] + 1] == 0):
+					await execute_step(character, job, position, direction_index)
+			elif direction_index[0] == EAST:
+				while(map[position[0]][position[0] - 1] == 0):
+					await execute_step(character, job, position, direction_index)
+			elif direction_index[0] == WEST:				
+				while(map[position[0]][position[0] + 1] == 0):
+					await execute_step(character, job, position, direction_index)
+					
+		elif instruction.type == "WHILE LAND NOT INFRONT":
+			if direction_index[0] == NORTH:
+				while(!(map[position[0]][position[1] + 1] == 1)):
+					await execute_step(character, job, position, direction_index)
+			elif direction_index[0] == SOUTH:
+				while(!(map[position[0]][position[1] - 1] == 1)):
+					await execute_step(character, job, position, direction_index)
+			elif direction_index[0] == EAST:
+				while(!(map[position[0]][position[0] + 1] == 1)):
+					await execute_step(character, job, position, direction_index)
+			elif direction_index[0] == WEST:				
+				while(!(map[position[0]][position[0] - 1] == 1)):
+					await execute_step(character, job, position, direction_index)
+					
+		elif instruction.type == "WHILE LAND NOT BEHIND":
+			if direction_index[0] == NORTH:
+				while(!(map[position[0]][position[1] - 1] == 1)):
+					await execute_step(character, job, position, direction_index)
+			elif direction_index[0] == SOUTH:
+				while(!(map[position[0]][position[1] + 1] == 1)):
+					await execute_step(character, job, position, direction_index)
+			elif direction_index[0] == EAST:
+				while(!(map[position[0]][position[0] - 1] == 1)):
+					await execute_step(character, job, position, direction_index)
+			elif direction_index[0] == WEST:				
+				while(!(map[position[0]][position[0] + 1] == 1)):
+					await execute_step(character, job, position, direction_index)
+					
+		elif instruction.type == "WHILE WATER NOT INFRONT":
+			if direction_index[0] == NORTH:
+				while(!(map[position[0]][position[1] + 1] == 0)):
+					await execute_step(character, job, position, direction_index)
+			elif direction_index[0] == SOUTH:
+				while(!(map[position[0]][position[1] - 1] == 0)):
+					await execute_step(character, job, position, direction_index)
+			elif direction_index[0] == EAST:
+				while(!(map[position[0]][position[0] + 1] == 0)):
+					await execute_step(character, job, position, direction_index)
+			elif direction_index[0] == WEST:				
+				while(!(map[position[0]][position[0] - 1] == 0)):
+					await execute_step(character, job, position, direction_index)
+					
+		elif instruction.type == "WHILE WATER NOT BEHIND":
+			if direction_index[0] == NORTH:
+				while(!(map[position[0]][position[1] - 1] == 0)):
+					await execute_step(character, job, position, direction_index)
+			elif direction_index[0] == SOUTH:
+				while(!(map[position[0]][position[1] + 1] == 0)):
+					await execute_step(character, job, position, direction_index)
+			elif direction_index[0] == EAST:
+				while(!(map[position[0]][position[0] - 1] == 0)):
+					await execute_step(character, job, position, direction_index)
+			elif direction_index[0] == WEST:				
+				while(!(map[position[0]][position[0] + 1] == 0)):
+					await execute_step(character, job, position, direction_index)
 	return false
 
 func call_hint(msg: String):

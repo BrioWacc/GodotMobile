@@ -34,6 +34,7 @@ func _ready():
 	
 	initial_x = redpanda.position.x
 	initial_z = redpanda.position.z
+	redpanda.level = "1"
 	pass
 
 func wait(seconds: float) -> void:

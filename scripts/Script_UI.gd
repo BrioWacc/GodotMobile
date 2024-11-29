@@ -2,6 +2,7 @@ extends Control
 
 const code_lines : PackedScene = preload("res://scenes/code_line.tscn")
 const popups : PackedScene = preload("res://scenes/popup.tscn")
+const while_popup : PackedScene = preload("res://scenes/while_popup.tscn")
 @onready var code_cols : VBoxContainer = $ScriptBG/CodingArea/PanelContainer/ScrollContainer/code_cols
 
 func set_type(type: String):
@@ -12,6 +13,14 @@ func set_type(type: String):
 	else:
 		print("attempted to load unknown ui type " + type)
 		get_tree().quit()
+
+func disable_WHILE(type: String):
+	if type == "panda":
+		$ScriptBG/PandaHBox/While.hide()
+	elif type == "frog":
+		$ScriptBG/FrogHBox/While.hide()
+	else:
+		print("attempted to hide while of " + type)
 
 func _on_step_pressed():
 	var popup_instance = popups.instantiate()
@@ -31,9 +40,20 @@ func _on_tongue_pressed():
 	add_child(popup_instance)
 	popup_instance.connect("done_pressed", _on_popup_done)
 
+func _on_while_pressed():
+	var while_popup_instance = while_popup.instantiate()
+	add_child(while_popup_instance)
+	while_popup_instance.connect("while_done_pressed", _on_while_popup_done)
+	pass
+
 func _on_popup_done(value, type):
 	var temp = code_lines.instantiate()
 	temp.set_type(type, value)
+	code_cols.add_child(temp)
+	
+func _on_while_popup_done(type):
+	var temp = code_lines.instantiate()
+	temp.set_type(type, 1)
 	code_cols.add_child(temp)
 
 func _on_clear_pressed():
