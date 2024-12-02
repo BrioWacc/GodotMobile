@@ -3,6 +3,7 @@ extends Control
 const code_lines : PackedScene = preload("res://scenes/code_line.tscn")
 const popups : PackedScene = preload("res://scenes/popup.tscn")
 const while_popup : PackedScene = preload("res://scenes/while_popup.tscn")
+const if_popup : PackedScene = preload("res://scenes/if_popup.tscn")
 @onready var code_cols : VBoxContainer = $ScriptBG/CodingArea/PanelContainer/ScrollContainer/code_cols
 
 func set_type(type: String):
@@ -21,6 +22,14 @@ func disable_WHILE(type: String):
 		$ScriptBG/FrogHBox/While.hide()
 	else:
 		print("attempted to hide while of " + type)
+		
+func disable_IF(type: String):
+	if type == "panda":
+		$ScriptBG/PandaHBox/if.hide()
+	elif type == "frog":
+		$ScriptBG/FrogHBox/if.hide()
+	else:
+		print("attempted to hide if of " + type)
 
 func _on_step_pressed():
 	var popup_instance = popups.instantiate()
@@ -46,6 +55,12 @@ func _on_while_pressed():
 	while_popup_instance.connect("while_done_pressed", _on_while_popup_done)
 	pass
 
+func _on_if_pressed():
+	var if_popup_instance = if_popup.instantiate()
+	add_child(if_popup_instance)
+	if_popup_instance.connect("if_done_pressed", _on_if_popup_done)
+	pass
+
 func _on_popup_done(value, type):
 	var temp = code_lines.instantiate()
 	temp.set_type(type, value)
@@ -55,7 +70,12 @@ func _on_while_popup_done(type):
 	var temp = code_lines.instantiate()
 	temp.set_type(type, 1)
 	code_cols.add_child(temp)
-
+	
+func _on_if_popup_done(type):
+	var temp = code_lines.instantiate()
+	temp.set_type(type, 1)
+	code_cols.add_child(temp)
+	
 func _on_clear_pressed():
 	for child in code_cols.get_children():
 		child.queue_free()

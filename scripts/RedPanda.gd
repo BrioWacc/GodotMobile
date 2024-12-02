@@ -20,7 +20,9 @@ func openGUi():
 		ui_instance = ui_scene.instantiate()
 		get_tree().current_scene.add_child(ui_instance) 
 		ui_instance.set_type("panda")
-		if level == "1": ui_instance.disable_WHILE("panda")
+		if level == "1": 
+			ui_instance.disable_WHILE("panda")
+			ui_instance.disable_IF("panda")
 	ui_instance.show()
 	
 	pass

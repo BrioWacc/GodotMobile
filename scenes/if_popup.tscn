@@ -1,0 +1,99 @@
+[gd_scene load_steps=4 format=3 uid="uid://cuju0bnba6bbq"]
+
+[ext_resource type="Script" path="res://scripts/if_popup.gd" id="1_tc8oo"]
+[ext_resource type="StyleBox" uid="uid://0e1spieoun80" path="res://resources/stylebox/hover_style_box_flat.tres" id="2_d3h1p"]
+
+[sub_resource type="Theme" id="Theme_yy6w2"]
+Button/styles/pressed = ExtResource("2_d3h1p")
+
+[node name="Popup" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_tc8oo")
+metadata/_edit_use_anchors_ = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PopupPanel" type="PopupPanel" parent="CanvasLayer"]
+initial_position = 1
+size = Vector2i(400, 300)
+visible = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/PopupPanel"]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 396.0
+offset_bottom = 296.0
+
+[node name="Cancel" type="Button" parent="CanvasLayer/PopupPanel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 50
+text = "Cancel"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PopupPanel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.5
+
+[node name="LAND" type="Button" parent="CanvasLayer/PopupPanel/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 50
+toggle_mode = true
+text = "LAND"
+
+[node name="WATER" type="Button" parent="CanvasLayer/PopupPanel/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 50
+toggle_mode = true
+text = "WATER"
+
+[node name="SLIDER 1" type="Button" parent="CanvasLayer/PopupPanel/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+disabled = true
+
+[node name="NOT" type="Button" parent="CanvasLayer/PopupPanel/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 50
+toggle_mode = true
+text = "NOT"
+
+[node name="SLIDER 2" type="Button" parent="CanvasLayer/PopupPanel/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_yy6w2")
+disabled = true
+
+[node name="BEHIND" type="Button" parent="CanvasLayer/PopupPanel/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 50
+toggle_mode = true
+text = "BEHIND
+"
+
+[node name="INFRONT" type="Button" parent="CanvasLayer/PopupPanel/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 50
+toggle_mode = true
+text = "INFRONT"
+
+[node name="Done" type="Button" parent="CanvasLayer/PopupPanel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 50
+text = "Done"
+
+[connection signal="pressed" from="CanvasLayer/PopupPanel/HBoxContainer/Cancel" to="." method="_on_cancel_pressed"]
+[connection signal="toggled" from="CanvasLayer/PopupPanel/HBoxContainer/VBoxContainer/LAND" to="." method="_on_land_toggled"]
+[connection signal="toggled" from="CanvasLayer/PopupPanel/HBoxContainer/VBoxContainer/WATER" to="." method="_on_water_toggled"]
+[connection signal="toggled" from="CanvasLayer/PopupPanel/HBoxContainer/VBoxContainer/NOT" to="." method="_on_not_toggled"]
+[connection signal="toggled" from="CanvasLayer/PopupPanel/HBoxContainer/VBoxContainer/BEHIND" to="." method="_on_behind_toggled"]
+[connection signal="toggled" from="CanvasLayer/PopupPanel/HBoxContainer/VBoxContainer/INFRONT" to="." method="_on_infront_toggled"]
+[connection signal="pressed" from="CanvasLayer/PopupPanel/HBoxContainer/Done" to="." method="_on_done_pressed"]
