@@ -50,6 +50,8 @@ func _ready():
 	
 	frog_initial_x = frog.position.x
 	frog_initial_z = frog.position.z
+	
+	call_hint("The Red Panda needs to reach the flower field again, while the frog needs to tongue the island while facing it and being as close as possible")
 
 func wait(seconds: float) -> void:
 	await get_tree().create_timer(seconds).timeout
