@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://scripts/Frog.gd" id="2_4lhng"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_fg45f"]
-size = Vector3(1, 0.995483, 1)
+size = Vector3(1, 0.8, 1.1)
 
 [node name="Frog" type="MeshInstance3D"]
 transform = Transform3D(-0.986421, 0, 0.164239, 0, 1, 0, -0.164239, 0, -0.986421, 6.35922, 0.276742, 23.4956)
@@ -14,7 +14,7 @@ script = ExtResource("2_4lhng")
 [node name="Area3D" type="Area3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-transform = Transform3D(1, 0, 0, 0, 0.8, 0, 0, 0, 1.1, 0, 0.4, -0.05)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, -0.05)
 shape = SubResource("BoxShape3D_fg45f")
 
 [connection signal="input_event" from="Area3D" to="." method="_on_area_3d_input_event"]

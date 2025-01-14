@@ -35,7 +35,8 @@ func _ready():
 	initial_x = redpanda.position.x
 	initial_z = redpanda.position.z
 	redpanda.level = "1"
-	pass
+	
+	call_hint("The goal is to lead the Red Panda to the field with the flowers. This can be achieved by pressing the Red Panda and configuring his script!")
 
 func wait(seconds: float) -> void:
 	await get_tree().create_timer(seconds).timeout
@@ -66,12 +67,12 @@ func play_level():
 				await wait(0.3)
 				
 				if(map[panda_pos[0]][panda_pos[1]] == 0):
-					call_hint("Der Panda ist ins Wasser gefallen!\n Achte darauf das er auf dem Land bleibt.");
+					call_hint("The Red Panda fell into the water, try again!");
 					player_ui_instance.unlock_reset()
 					break
 					
 				if(map[panda_pos[0]][panda_pos[1]] == 2):
-					call_hint("Level Geschaft!\n du hast " + str(Actions) + " Zyklen benoetigt");
+					call_hint("You did it!");
 					player_ui_instance.unlock_reset()
 					break
 				
@@ -100,10 +101,6 @@ func reset():
 	panda_pos=[1,1]
 	
 	if redpanda.ui_instance == null: return
-	
-	#for child in redpanda.ui_instance.return_children():
-	#	child.queue_free()
-	#pass
 	
 	player_ui_instance.hide_reset()
 	player_ui_instance.lock_buttons(false)

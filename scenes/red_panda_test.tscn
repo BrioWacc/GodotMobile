@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://c72t73eismf6o"]
+
+[ext_resource type="ArrayMesh" uid="uid://udj7ersreuwn" path="res://models/Red_panda.vox" id="1_xhheg"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_be8p1"]
+size = Vector3(2.2, 1.4, 1.2)
+
+[node name="MeshInstance3D" type="MeshInstance3D"]
+transform = Transform3D(-0.8, 0, -6.99382e-08, 0, 0.8, 0, 6.99382e-08, 0, -0.8, 1, 0.6, 1.25)
+mesh = ExtResource("1_xhheg")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+shape = SubResource("BoxShape3D_be8p1")

@@ -6,7 +6,7 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_be8p1"]
 size = Vector3(2.2, 1.4, 1.2)
 
-[node name="RedPanda" type="MeshInstance3D"]
+[node name="MeshInstance3D" type="MeshInstance3D"]
 transform = Transform3D(-0.8, 0, -6.99382e-08, 0, 0.8, 0, 6.99382e-08, 0, -0.8, 1, 0.6, 1.25)
 mesh = ExtResource("1_nmn4d")
 script = ExtResource("2_iu50l")
